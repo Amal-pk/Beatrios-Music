@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/functions/app_colors.dart';
+import 'package:get/get.dart';
+import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/functions/get_setting.dart';
-import 'package:music_player/functions/resacn_function.dart';
+import 'package:music_player/widgets/resacn_function.dart';
 import 'package:share_plus/share_plus.dart';
 
 class Settings extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SettingsState extends State<Settings> {
         appBar: AppBar(
           leading: IconButton(
               onPressed: (() {
-                Navigator.pop(context);
+                Get.back();
               }),
               icon: const Icon(
                 Icons.arrow_back,

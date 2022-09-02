@@ -50,6 +50,7 @@ dependencies:
   audio_video_progress_bar: ^0.10.0
   marquee_text: ^2.5.0+1
   marquee: ^2.2.3
+  get: ^4.6.5
  
   
 

@@ -14,8 +14,8 @@ class CmnBgdClor extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromARGB(255, 68, 74, 90),
-            Color.fromARGB(246, 7, 23, 8),
+            Color.fromARGB(255, 3, 8, 22),
+            Color.fromARGB(246, 1, 11, 2),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

@@ -1,15 +1,16 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class LikedSongDB {
-  static bool isInitialized = false;
-  static final musicDb = Hive.box<int>('LikedSongsDB');
-  static ValueNotifier<List<SongModel>> likedsongs = ValueNotifier([]);
-  static initialise(List<SongModel> songs) {
+class LikedSongDB extends GetxController {
+  bool isInitialized = false;
+  final musicDb = Hive.box<int>('LikedSongsDB');
+  ValueNotifier<List<SongModel>> likedsongs = ValueNotifier([]);
+  initialise(List<SongModel> songs) {
     for (SongModel song in songs) {
       if (islike(song)) {
         likedsongs.value.add(song);
@@ -18,14 +19,15 @@ class LikedSongDB {
     isInitialized = true;
   }
 
-  static add(SongModel song) async {
+  add(SongModel song) {
     musicDb.add(song.id);
     likedsongs.value.add(song);
     // ignore: invalid_use_of_protected_member
-    LikedSongDB.likedsongs.notifyListeners();
+    // LikedSongDB.likedsongs.notifyListeners();
+    update();
   }
 
-  static delete(int id) async {
+  delete(int id) async {
     int deleted = 0;
     if (!musicDb.values.contains(id)) {
       return;
@@ -40,9 +42,10 @@ class LikedSongDB {
     );
     musicDb.delete(deleted);
     likedsongs.value.removeWhere((song) => song.id == id);
+    update();
   }
 
-  static bool islike(SongModel song) {
+  bool islike(SongModel song) {
     if (musicDb.values.contains(song.id)) {
       return true;
     }

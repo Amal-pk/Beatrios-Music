@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:music_player/functions/animated_text.dart';
-import 'package:music_player/functions/songstorage.dart';
-import 'package:music_player/playing_music/play_music.dart';
+import 'package:music_player/widgets/animated_text.dart';
+import 'package:music_player/widgets/songstorage.dart';
+import 'package:music_player/screens/playing_music/play_music.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class MiniScreen extends StatefulWidget {

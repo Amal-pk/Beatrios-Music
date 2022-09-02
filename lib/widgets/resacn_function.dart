@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:music_player/home_screen.dart';
+import 'package:music_player/screens/home/home_screen.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -89,7 +89,7 @@ class _ScanScreenState extends State<ScanScreen>
                     10,
                   ),
                 ),
-                primary: Colors.grey,
+                backgroundColor: Colors.grey,
                 textStyle: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,

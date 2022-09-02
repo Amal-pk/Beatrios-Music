@@ -1,13 +1,13 @@
-import 'dart:developer';
-
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
+// import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_player/db/liked_songs_db.dart';
-import 'package:music_player/functions/app_colors.dart';
-import 'package:music_player/functions/liked_button.dart';
-import 'package:music_player/functions/songstorage.dart';
+import 'package:music_player/functions/color/app_colors.dart';
+import 'package:music_player/functions/buttons/liked_button.dart';
+import 'package:music_player/widgets/songstorage.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -22,6 +22,8 @@ class PlayMusic extends StatefulWidget {
   @override
   State<PlayMusic> createState() => _PlayMusicState();
 }
+
+LikedSongDB _db = Get.put(LikedSongDB());
 
 class _PlayMusicState extends State<PlayMusic> {
   bool _isPlaying = false;
@@ -54,7 +56,7 @@ class _PlayMusicState extends State<PlayMusic> {
             onPressed: (() {
               setState(() {});
               Navigator.pop(context);
-              LikedSongDB.likedsongs.notifyListeners();
+              _db.likedsongs.notifyListeners();
             }),
             icon: const Icon(
               Icons.keyboard_arrow_down_outlined,
@@ -193,7 +195,7 @@ class _PlayMusicState extends State<PlayMusic> {
                           ],
                         ),
                       ),
-                      if (LikedSongDB.isInitialized)
+                      if (_db.isInitialized)
                         Padding(
                           padding: const EdgeInsets.only(right: 20),
                           child: LikedButton(
@@ -270,9 +272,9 @@ class _PlayMusicState extends State<PlayMusic> {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
                             elevation: 0,
-                            primary: Colors.transparent,
-                            onPrimary: Colors.white),
+                            backgroundColor: Colors.transparent),
                         onPressed: () async {
                           if (Songstorage.player.playing) {
                             await Songstorage.player.pause();

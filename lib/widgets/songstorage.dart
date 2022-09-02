@@ -1,9 +1,10 @@
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 
-class Songstorage {
+class Songstorage extends GetxController {
   static AudioPlayer player = AudioPlayer();
   static int currentIndex = -1;
   static List<SongModel> songCopy = [];

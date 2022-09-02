@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_player/db/music_db.dart';
-import 'package:music_player/functions/app_colors.dart';
-import 'package:music_player/functions/songstorage.dart';
-import 'package:music_player/playing_music/play_music.dart';
+import 'package:music_player/functions/color/app_colors.dart';
+import 'package:music_player/widgets/songstorage.dart';
+import 'package:music_player/screens/playing_music/play_music.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';

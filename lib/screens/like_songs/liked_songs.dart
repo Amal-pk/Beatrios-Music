@@ -1,14 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_player/db/liked_songs_db.dart';
-import 'package:music_player/functions/app_colors.dart';
-import 'package:music_player/functions/songstorage.dart';
-import 'package:music_player/home_screen.dart';
-import 'package:music_player/playing_music/play_music.dart';
+import 'package:music_player/functions/color/app_colors.dart';
+import 'package:music_player/widgets/songstorage.dart';
+import 'package:music_player/screens/playing_music/play_music.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class LikedSongs extends StatefulWidget {
@@ -20,6 +20,7 @@ class LikedSongs extends StatefulWidget {
 
 class _LikedSongsState extends State<LikedSongs> {
   final OnAudioQuery audioQuery = OnAudioQuery();
+  LikedSongDB _db = Get.put(LikedSongDB());
 
   static ConcatenatingAudioSource createSongList(List<SongModel> song) {
     List<AudioSource> source = [];
@@ -31,12 +32,12 @@ class _LikedSongsState extends State<LikedSongs> {
 
   playSong(String? uri) {
     try {
-      HomeScreen.audioPlayer.setAudioSource(
+      Songstorage.player.setAudioSource(
         AudioSource.uri(
           Uri.parse(uri!),
         ),
       );
-      HomeScreen.audioPlayer.play();
+      Songstorage.player.play();
     } on Exception {
       log("Error Parssing song");
     }
@@ -47,7 +48,7 @@ class _LikedSongsState extends State<LikedSongs> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return ValueListenableBuilder(
-      valueListenable: LikedSongDB.likedsongs,
+      valueListenable: _db.likedsongs,
       builder: (BuildContext ctx, List<SongModel> likeData, Widget? child) {
         return CmnBgdClor(
           child: Scaffold(
@@ -65,7 +66,7 @@ class _LikedSongsState extends State<LikedSongs> {
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: ValueListenableBuilder(
-                valueListenable: LikedSongDB.likedsongs,
+                valueListenable: _db.likedsongs,
                 builder: (BuildContext ctx, List<SongModel> likeData,
                     Widget? child) {
                   return Hive.box<int>('LikedSongsDB').isEmpty
@@ -145,7 +146,7 @@ class _LikedSongsState extends State<LikedSongs> {
                                   ),
                                   trailing: IconButton(
                                     onPressed: (() {
-                                      LikedSongDB.delete(likeData[index].id);
+                                      _db.delete(likeData[index].id);
                                       setState(() {});
                                     }),
                                     icon: const Icon(

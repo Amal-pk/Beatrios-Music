@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_player/db/music_db.dart';
-import 'package:music_player/functions/app_colors.dart';
-import 'package:music_player/functions/songstorage.dart';
-import 'package:music_player/playing_music/play_music.dart';
-import 'package:music_player/playlist/all_songs.dart';
+import 'package:music_player/functions/color/app_colors.dart';
+import 'package:music_player/widgets/songstorage.dart';
+import 'package:music_player/screens/playing_music/play_music.dart';
+import 'package:music_player/screens/play_list/widgets/all_songs.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlaylistData extends StatefulWidget {
@@ -32,19 +32,27 @@ class _PlaylistDataState extends State<PlaylistData> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-              onPressed: (() {
-                Navigator.of(context).pop();
-              }),
-              icon: const Icon(Icons.arrow_back)),
-          title: Center(child: Text(widget.playlist.name)),
+            onPressed: (() {
+              Navigator.of(context).pop();
+            }),
+            icon: const Icon(Icons.arrow_back),
+          ),
+          title: Center(
+            child: Text(widget.playlist.name),
+          ),
           actions: [
             IconButton(
-                onPressed: (() {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: ((context) =>
-                          PlaylistAllSongs(playlist: widget.playlist))));
-                }),
-                icon: const Icon(Icons.add))
+              onPressed: (() {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: ((context) => PlaylistAllSongs(
+                          playlist: widget.playlist,
+                        )),
+                  ),
+                );
+              }),
+              icon: const Icon(Icons.add),
+            )
           ],
         ),
         body: Padding(
@@ -70,9 +78,9 @@ class _PlaylistDataState extends State<PlaylistData> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600),
                             ),
-                            Image.asset(
-                              'assets/images/alan walker.jpg',
-                              height: height / 5,
+                            Lottie.asset(
+                              'assets/images/23143-walking-man.json',
+                              height: height / 2,
                             ),
                           ],
                         ),
