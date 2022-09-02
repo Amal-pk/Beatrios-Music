@@ -141,7 +141,7 @@ class _SettingsState extends State<Settings> {
               ),
               const Center(
                 child: Text(
-                  'v 1.0.0',
+                  'v1.0.0',
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -155,7 +155,8 @@ class _SettingsState extends State<Settings> {
   }
 
   linkShare() async {
-    const appLink = '';
+    const appLink =
+        'https://play.google.com/store/apps/details?id=in.fouvty.music_player';
     await Share.share(appLink);
   }
 }
