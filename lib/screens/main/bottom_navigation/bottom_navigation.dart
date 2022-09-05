@@ -1,4 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member, must_be_immutable
+// ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member, must_be_immutable, unused_field, prefer_final_fields
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,8 +18,8 @@ class BottomNavigator extends StatelessWidget {
   final pages = [
     HomeScreen(),
     SearchScreen(),
-    const LikedSongs(),
-    const PlayListScreen(),
+    LikedSongs(),
+    PlayListScreen(),
   ];
   LikedSongDB _db = Get.put(LikedSongDB());
   @override
@@ -27,65 +27,65 @@ class BottomNavigator extends StatelessWidget {
     FocusManager.instance.primaryFocus?.unfocus();
     return CmnBgdClor(
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Obx(
-              (() => IndexedStack(index: currentIndex.value, children: pages))),
-          bottomNavigationBar: GetBuilder<LikedSongDB>(
-            builder: ((controller) {
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (Songstorage.player.currentIndex != null)
-                      Column(
-                        children: const [
-                          MiniScreen(),
-                        ],
-                      )
-                    else
-                      const SizedBox(),
-                    Obx(
-                      (() => BottomNavigationBar(
-                            elevation: 0,
-                            selectedItemColor: Colors.white,
-                            unselectedItemColor: Colors.grey,
-                            backgroundColor: Colors.transparent,
-                            currentIndex: currentIndex.value,
-                            onTap: (index) {
-                              currentIndex.value = index;
-                            },
-                            type: BottomNavigationBarType.fixed,
-                            items: const <BottomNavigationBarItem>[
-                              BottomNavigationBarItem(
-                                icon: Icon(Icons.home),
-                                label: 'Home',
-                              ),
-                              BottomNavigationBarItem(
-                                icon: Icon(
-                                  Icons.search,
-                                ),
-                                label: 'Search',
-                              ),
-                              BottomNavigationBarItem(
-                                icon: Icon(
-                                  Icons.favorite,
-                                ),
-                                label: 'Like',
-                              ),
-                              BottomNavigationBarItem(
-                                icon: Icon(
-                                  Icons.library_music_rounded,
-                                ),
-                                label: 'Playlist',
-                              ),
-                            ],
-                          )),
+        backgroundColor: Colors.transparent,
+        body: Obx((() => pages[currentIndex.value])),
+        bottomNavigationBar: GetBuilder<LikedSongDB>(
+          builder: ((controller) {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (Songstorage.player.currentIndex != null)
+                    Column(
+                      children: const [
+                        MiniScreen(),
+                      ],
                     )
-                  ],
-                ),
-              );
-            }),
-          )),
+                  else
+                    const SizedBox(),
+                  Obx(
+                    (() => BottomNavigationBar(
+                          elevation: 0,
+                          selectedItemColor: Colors.white,
+                          unselectedItemColor: Colors.grey,
+                          backgroundColor: Colors.transparent,
+                          currentIndex: currentIndex.value,
+                          onTap: (index) {
+                            currentIndex.value = index;
+                          },
+                          type: BottomNavigationBarType.fixed,
+                          items: const <BottomNavigationBarItem>[
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.home),
+                              label: 'Home',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.search,
+                              ),
+                              label: 'Search',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.favorite,
+                              ),
+                              label: 'Like',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.library_music_rounded,
+                              ),
+                              label: 'Playlist',
+                            ),
+                          ],
+                        )),
+                  )
+                ],
+              ),
+            );
+          }),
+        ),
+      ),
     );
   }
 }

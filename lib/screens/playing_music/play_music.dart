@@ -1,46 +1,26 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_player/db/liked_songs_db.dart';
 import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/functions/buttons/liked_button.dart';
+import 'package:music_player/screens/playing_music/widgets/controller.dart';
 import 'package:music_player/widgets/songstorage.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:rxdart/rxdart.dart' as rx;
 
-class PlayMusic extends StatefulWidget {
-  const PlayMusic({
+class PlayMusic extends StatelessWidget {
+  PlayMusic({
     Key? key,
     required this.songModel,
-    // required List<SongModel> playerSong,
   }) : super(key: key);
   final List<SongModel> songModel;
 
-  @override
-  State<PlayMusic> createState() => _PlayMusicState();
-}
-
-LikedSongDB _db = Get.put(LikedSongDB());
-
-class _PlayMusicState extends State<PlayMusic> {
-  bool _isPlaying = false;
-  int currentindex = 0;
-  @override
-  void initState() {
-    Songstorage.player.currentIndexStream.listen((index) {
-      if (index != null && mounted) {
-        setState(() {
-          currentindex = index;
-        });
-        Songstorage.currentIndex = index;
-      }
-    });
-    super.initState();
-  }
-
+  final LikedSongDB _db = Get.put(LikedSongDB());
+  final PlayScreenController _playScreenController =
+      Get.put(PlayScreenController());
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -54,9 +34,8 @@ class _PlayMusicState extends State<PlayMusic> {
           backgroundColor: Colors.transparent,
           leading: IconButton(
             onPressed: (() {
-              setState(() {});
-              Navigator.pop(context);
-              _db.likedsongs.notifyListeners();
+              // setState(() {});
+              Get.back();
             }),
             icon: const Icon(
               Icons.keyboard_arrow_down_outlined,
@@ -101,27 +80,28 @@ class _PlayMusicState extends State<PlayMusic> {
                   ),
                 ),
                 PopupMenuItem(
-                    child: StreamBuilder<double>(
-                        stream: Songstorage.player.speedStream,
-                        builder: (context, snapshot) => IconButton(
-                              icon: Text(
-                                  "${snapshot.data?.toStringAsFixed(1)}x",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)),
-                              onPressed: () {
-                                showSliderDialog(
-                                  context: context,
-                                  title: "Adjust speed",
-                                  divisions: 10,
-                                  min: 0.5,
-                                  max: 1.5,
-                                  value: Songstorage.player.speed,
-                                  stream: Songstorage.player.speedStream,
-                                  onChanged: Songstorage.player.setSpeed,
-                                );
-                              },
-                            )))
+                  child: StreamBuilder<double>(
+                    stream: Songstorage.player.speedStream,
+                    builder: (context, snapshot) => IconButton(
+                      icon: Text("${snapshot.data?.toStringAsFixed(1)}x",
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        showSliderDialog(
+                          context: context,
+                          title: "Adjust speed",
+                          divisions: 10,
+                          min: 0.5,
+                          max: 1.5,
+                          value: Songstorage.player.speed,
+                          stream: Songstorage.player.speedStream,
+                          onChanged: Songstorage.player.setSpeed,
+                        );
+                      },
+                    ),
+                  ),
+                )
               ],
             )
           ],
@@ -137,19 +117,22 @@ class _PlayMusicState extends State<PlayMusic> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: QueryArtworkWidget(
-                      id: widget.songModel[currentindex].id,
-                      type: ArtworkType.AUDIO,
-                      artworkHeight: height / 2.2,
-                      artworkWidth: width,
-                      nullArtworkWidget: SizedBox(
-                        height: height / 2.2,
-                        width: width,
-                        child: Lottie.asset(
-                          'assets/images/lf20_19misjxd.json',
+                    child: Obx(
+                      () => QueryArtworkWidget(
+                        id: songModel[_playScreenController.currentIndex.value]
+                            .id,
+                        type: ArtworkType.AUDIO,
+                        artworkHeight: height / 2.2,
+                        artworkWidth: width,
+                        nullArtworkWidget: SizedBox(
+                          height: height / 2.2,
+                          width: width,
+                          child: Lottie.asset(
+                            'assets/images/lf20_19misjxd.json',
+                          ),
                         ),
+                        keepOldArtwork: true,
                       ),
-                      keepOldArtwork: true,
                     ),
                   ),
                   SizedBox(
@@ -164,32 +147,42 @@ class _PlayMusicState extends State<PlayMusic> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                widget.songModel[currentindex].displayNameWOExt,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: false,
+                              child: Obx(
+                                (() => Text(
+                                      songModel[_playScreenController
+                                              .currentIndex.value]
+                                          .displayNameWOExt,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: false,
+                                    )),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                widget.songModel[currentindex].artist
-                                            .toString() ==
-                                        "<unknown>"
-                                    ? "Unknown Artist"
-                                    : widget.songModel[currentindex].artist
-                                        .toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 16,
+                              child: Obx(
+                                () => Text(
+                                  songModel[_playScreenController
+                                                  .currentIndex.value]
+                                              .artist
+                                              .toString() ==
+                                          "<unknown>"
+                                      ? "Unknown Artist"
+                                      : songModel[_playScreenController
+                                              .currentIndex.value]
+                                          .artist
+                                          .toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 16,
+                                  ),
+                                  maxLines: 1,
                                 ),
-                                maxLines: 1,
                               ),
                             ),
                           ],
@@ -198,8 +191,11 @@ class _PlayMusicState extends State<PlayMusic> {
                       if (_db.isInitialized)
                         Padding(
                           padding: const EdgeInsets.only(right: 20),
-                          child: LikedButton(
-                            song: widget.songModel[currentindex],
+                          child: Obx(
+                            () => LikedButton(
+                              song: songModel[
+                                  _playScreenController.currentIndex.value],
+                            ),
                           ),
                         )
                     ],
@@ -207,30 +203,32 @@ class _PlayMusicState extends State<PlayMusic> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: StreamBuilder<DurationState>(
-                        stream: _durationStateStream,
-                        builder: (context, snapshot) {
-                          final durationState = snapshot.data;
-                          final progress =
-                              durationState?.position ?? Duration.zero;
-                          final total = durationState?.total ?? Duration.zero;
-                          return ProgressBar(
-                              timeLabelTextStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15),
-                              progress: progress,
-                              total: total,
-                              barHeight: 3.0,
-                              thumbRadius: 5,
-                              progressBarColor: Colors.white,
-                              thumbColor: Colors.white,
-                              baseBarColor: Colors.grey,
-                              bufferedBarColor: Colors.grey,
-                              buffered: const Duration(milliseconds: 2000),
-                              onSeek: (duration) {
-                                Songstorage.player.seek(duration);
-                              });
-                        }),
+                      stream: _durationStateStream,
+                      builder: (context, snapshot) {
+                        final durationState = snapshot.data;
+                        final progress =
+                            durationState?.position ?? Duration.zero;
+                        final total = durationState?.total ?? Duration.zero;
+                        return ProgressBar(
+                          timeLabelTextStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
+                          progress: progress,
+                          total: total,
+                          barHeight: 3.0,
+                          thumbRadius: 5,
+                          progressBarColor: Colors.white,
+                          thumbColor: Colors.white,
+                          baseBarColor: Colors.grey,
+                          bufferedBarColor: Colors.grey,
+                          buffered: const Duration(milliseconds: 2000),
+                          onSeek: (duration) {
+                            Songstorage.player.seek(duration);
+                          },
+                        );
+                      },
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -278,10 +276,10 @@ class _PlayMusicState extends State<PlayMusic> {
                         onPressed: () async {
                           if (Songstorage.player.playing) {
                             await Songstorage.player.pause();
-                            setState(() {});
+                            // setState(() {});
                           } else {
                             await Songstorage.player.play();
-                            setState(() {});
+                            // setState(() {});
                           }
                         },
                         child: StreamBuilder<bool>(
@@ -344,12 +342,14 @@ class _PlayMusicState extends State<PlayMusic> {
                           ];
                           final index = cycleModes.indexOf(loopmode);
                           return IconButton(
-                              onPressed: () {
-                                Songstorage.player.setLoopMode(cycleModes[
-                                    (cycleModes.indexOf(loopmode) + 1) %
-                                        cycleModes.length]);
-                              },
-                              icon: icons[index]);
+                            onPressed: () {
+                              Songstorage.player.setLoopMode(
+                                cycleModes[(cycleModes.indexOf(loopmode) + 1) %
+                                    cycleModes.length],
+                              );
+                            },
+                            icon: icons[index],
+                          );
                         },
                       ),
                     ],
@@ -364,7 +364,7 @@ class _PlayMusicState extends State<PlayMusic> {
   }
 
   Stream<DurationState> get _durationStateStream =>
-      Rx.combineLatest2<Duration, Duration?, DurationState>(
+      rx.Rx.combineLatest2<Duration, Duration?, DurationState>(
           Songstorage.player.positionStream,
           Songstorage.player.durationStream,
           (position, duration) => DurationState(

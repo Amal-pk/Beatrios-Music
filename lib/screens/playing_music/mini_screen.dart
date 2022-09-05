@@ -97,9 +97,9 @@ class _MiniScreenState extends State<MiniScreen> {
                   )),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
                     elevation: 0,
-                    primary: Colors.transparent,
-                    onPrimary: Colors.white),
+                    backgroundColor: Colors.transparent),
                 onPressed: () async {
                   if (Songstorage.player.playing) {
                     await Songstorage.player.pause();

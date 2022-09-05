@@ -8,7 +8,6 @@ import 'package:on_audio_query/on_audio_query.dart';
 class LikedButton extends StatelessWidget {
   LikedButton({Key? key, required this.song}) : super(key: key);
   final SongModel song;
-
   LikedSongDB _db = Get.put(LikedSongDB());
   @override
   Widget build(BuildContext context) {
@@ -18,18 +17,16 @@ class LikedButton extends StatelessWidget {
           onPressed: () {
             if (_db.islike(song)) {
               _db.delete(song.id);
-              // LikedSongDB.likedsongs.notifyListeners();
-
               const snackBar = SnackBar(
-                  backgroundColor: Colors.white,
-                  content: Text(
-                    'Removed From Favorite',
-                    style: TextStyle(color: Colors.black),
-                  ));
+                backgroundColor: Colors.white,
+                content: Text(
+                  'Removed From Favorite',
+                  style: TextStyle(color: Colors.black),
+                ),
+              );
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               _db.add(song);
-              // LikedSongDB.likedsongs.notifyListeners();
               const snackbar = SnackBar(
                 backgroundColor: Colors.white,
                 content: Text(
@@ -39,8 +36,6 @@ class LikedButton extends StatelessWidget {
               );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
-
-            // LikedSongDB.likedsongs.notifyListeners();
           },
           icon: _db.islike(song)
               ? const Icon(
