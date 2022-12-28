@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-<<<<<<< Updated upstream:lib/playing_music/mini_screen.dart
-import 'package:music_player/functions/animated_text.dart';
-import 'package:music_player/functions/songstorage.dart';
-import 'package:music_player/playing_music/play_music.dart';
-=======
-import 'package:music_player/screens/playing_music/widgets/mini_controller.dart';
+import 'package:music_player/view/playing_music/widgets/mini_controller.dart';
 import 'package:music_player/widgets/animated_text.dart';
 import 'package:music_player/widgets/songstorage.dart';
-import 'package:music_player/screens/playing_music/play_music.dart';
->>>>>>> Stashed changes:lib/screens/playing_music/mini_screen.dart
+import 'package:music_player/view/playing_music/play_music.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class MiniScreen extends StatelessWidget {
@@ -98,9 +92,9 @@ class MiniScreen extends StatelessWidget {
                   )),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
                     elevation: 0,
-                    primary: Colors.transparent,
-                    onPrimary: Colors.white),
+                    backgroundColor: Colors.transparent),
                 onPressed: () async {
                   if (Songstorage.player.playing) {
                     await Songstorage.player.pause();

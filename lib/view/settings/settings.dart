@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/functions/app_colors.dart';
+import 'package:get/get.dart';
+import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/functions/get_setting.dart';
-import 'package:music_player/functions/resacn_function.dart';
+import 'package:music_player/view/settings/widgets/resacn_function.dart';
 import 'package:share_plus/share_plus.dart';
 
-class Settings extends StatefulWidget {
+class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
 
-  @override
-  State<Settings> createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -20,13 +16,14 @@ class _SettingsState extends State<Settings> {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: (() {
-                Navigator.pop(context);
-              }),
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              )),
+            onPressed: (() {
+              Get.back();
+            }),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          ),
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: const Text(
@@ -144,7 +141,7 @@ class _SettingsState extends State<Settings> {
               ),
               const Center(
                 child: Text(
-                  'v 1.0.0',
+                  'v1.0.0',
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -158,7 +155,8 @@ class _SettingsState extends State<Settings> {
   }
 
   linkShare() async {
-    const appLink = '';
+    const appLink =
+        'https://play.google.com/store/apps/details?id=in.fouvty.music_player';
     await Share.share(appLink);
   }
 }
