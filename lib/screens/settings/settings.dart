@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player/functions/color/app_colors.dart';
-import 'package:music_player/functions/get_setting.dart';
+import 'package:music_player/functions/settings/grt_settings.dart';
 import 'package:music_player/screens/settings/widgets/resacn_function.dart';
 import 'package:share_plus/share_plus.dart';
 
