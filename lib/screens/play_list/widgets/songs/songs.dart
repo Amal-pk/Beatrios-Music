@@ -75,7 +75,7 @@ class PlaylistData extends StatelessWidget {
                                   fontWeight: FontWeight.w600),
                             ),
                             Lottie.asset(
-                              'assets/images/107575-ai-music-animation.json',
+                              'assets/images/71611-singing-and-playing-music-with-guitar.json',
                               height: height / 2,
                             ),
                           ],
