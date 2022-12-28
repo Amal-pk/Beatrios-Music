@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_player/db/music_db.dart';
-import 'package:music_player/spalsh.dart';
+import 'package:music_player/screens/main/spalsh_screen/spalsh.dart';
 
 Future<void> main() async {
   await JustAudioBackground.init(
@@ -25,12 +26,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: const LogoScreen(),
+      home: SpalshScreen(),
     );
   }
 }

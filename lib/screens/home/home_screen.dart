@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_player/screens/home/controller/controller.dart';
+import 'package:music_player/screens/home/widgets/controller.dart';
 import 'package:music_player/db/liked_songs_db.dart';
 import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/widgets/songstorage.dart';
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: const Text(
-            'M u s i c  S t o r e',
+            'Music Store',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,

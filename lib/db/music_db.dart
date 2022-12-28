@@ -4,7 +4,7 @@ part 'music_db.g.dart';
 @HiveType(typeId: 1)
 class Playlistmodel extends HiveObject {
   @HiveField(0)
-  List<int> songid;
+  List<dynamic> songid;
   @HiveField(1)
   final String name;
 

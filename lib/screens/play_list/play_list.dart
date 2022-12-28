@@ -3,11 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lottie/lottie.dart';
+import 'package:music_player/db/music_db.dart';
 import 'package:music_player/db/controller/playlist_db.dart';
 import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/screens/play_list/widgets/styles/playlist_empty_screen.dart';
 import 'package:music_player/screens/play_list/widgets/styles/playlist_gridview.dart';
 import 'package:music_player/screens/play_list/widgets/styles/show_dialog.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class PlayListScreen extends StatelessWidget {
   PlayListScreen({Key? key}) : super(key: key);

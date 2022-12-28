@@ -1,7 +1,10 @@
+// ignore_for_file: unused_field, prefer_final_fields, must_be_immutable
 
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_player/db/controller/playlist_db.dart';
 import 'package:music_player/db/music_db.dart';
 import 'package:music_player/functions/buttons/playlist_button.dart';
@@ -20,9 +23,8 @@ class PlaylistAllSongs extends StatelessWidget {
   final Playlistmodel playlist;
   final int folderIndex;
   final _audioQuery = OnAudioQuery();
+  final _audioPlayer = AudioPlayer();
 
-
-  // final _audioPlayer = AudioPlayer();
   // playsong(String? uri) {
   //   try {
   //     _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(uri!)));
@@ -69,7 +71,9 @@ class PlaylistAllSongs extends StatelessWidget {
                       ),
                     );
                   }
+
                   PlaylistAllSongs.allSongs = item.data!;
+
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListView.separated(

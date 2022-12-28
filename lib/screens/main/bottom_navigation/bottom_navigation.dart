@@ -31,62 +31,58 @@ class BottomNavigator extends StatelessWidget {
         body: Obx((() => pages[currentIndex.value])),
         bottomNavigationBar: GetBuilder<LikedSongDB>(
           builder: ((controller) {
-            return StreamBuilder(
-                stream: Songstorage.player.currentIndexStream,
-                builder: (context, int) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (Songstorage.player.currentIndex != null)
-                          Column(
-                            children: [
-                              MiniScreen(),
-                            ],
-                          )
-                        else
-                          const SizedBox(),
-                        Obx(
-                          (() => BottomNavigationBar(
-                                elevation: 0,
-                                selectedItemColor: Colors.white,
-                                unselectedItemColor: Colors.grey,
-                                backgroundColor: Colors.transparent,
-                                currentIndex: currentIndex.value,
-                                onTap: (index) {
-                                  currentIndex.value = index;
-                                },
-                                type: BottomNavigationBarType.fixed,
-                                items: const <BottomNavigationBarItem>[
-                                  BottomNavigationBarItem(
-                                    icon: Icon(Icons.home),
-                                    label: 'Home',
-                                  ),
-                                  BottomNavigationBarItem(
-                                    icon: Icon(
-                                      Icons.search,
-                                    ),
-                                    label: 'Search',
-                                  ),
-                                  BottomNavigationBarItem(
-                                    icon: Icon(
-                                      Icons.favorite,
-                                    ),
-                                    label: 'Like',
-                                  ),
-                                  BottomNavigationBarItem(
-                                    icon: Icon(
-                                      Icons.library_music_rounded,
-                                    ),
-                                    label: 'Playlist',
-                                  ),
-                                ],
-                              )),
-                        )
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (Songstorage.player.currentIndex != null)
+                    Column(
+                      children: const [
+                        MiniScreen(),
                       ],
-                    ),
-                  );
-                });
+                    )
+                  else
+                    const SizedBox(),
+                  Obx(
+                    (() => BottomNavigationBar(
+                          elevation: 0,
+                          selectedItemColor: Colors.white,
+                          unselectedItemColor: Colors.grey,
+                          backgroundColor: Colors.transparent,
+                          currentIndex: currentIndex.value,
+                          onTap: (index) {
+                            currentIndex.value = index;
+                          },
+                          type: BottomNavigationBarType.fixed,
+                          items: const <BottomNavigationBarItem>[
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.home),
+                              label: 'Home',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.search,
+                              ),
+                              label: 'Search',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.favorite,
+                              ),
+                              label: 'Like',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.library_music_rounded,
+                              ),
+                              label: 'Playlist',
+                            ),
+                          ],
+                        )),
+                  )
+                ],
+              ),
+            );
           }),
         ),
       ),

@@ -50,10 +50,9 @@ class LikedSongs extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: const Text(
-            'F A V O R I T E',
+            'Liked Songs',
             style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.bold,
             ),
           ),
         ),

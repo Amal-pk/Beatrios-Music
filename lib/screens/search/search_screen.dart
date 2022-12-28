@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/screens/playing_music/play_music.dart';
-import 'package:music_player/screens/search/controller/search_controller.dart';
+import 'package:music_player/screens/search/widget/search_controller.dart';
 import 'package:music_player/widgets/songstorage.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
