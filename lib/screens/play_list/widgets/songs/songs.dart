@@ -13,12 +13,15 @@ import 'package:music_player/screens/play_list/widgets/songs/all_songs.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlaylistData extends StatelessWidget {
-  PlaylistData({Key? key, required this.playlist, required this.folderIndex})
-      : super(key: key);
+  PlaylistData({
+    Key? key,
+    required this.playlist,
+    required this.folderIndex,
+  }) : super(key: key);
   final Playlistmodel playlist;
   final int folderIndex;
-  SongController _songController = Get.put(SongController());
-  PlaylistController _controller = Get.put(PlaylistController());
+  final SongController songController = Get.put(SongController());
+  final PlaylistController _controller = Get.put(PlaylistController());
 
   late List<SongModel> playlistSong;
   @override

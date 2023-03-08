@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
-import 'package:music_player/db/liked_songs_db.dart';
+import 'package:music_player/screens/like_songs/controller/liked_songs_db_controller.dart';
 import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/screens/like_songs/widgets/list_view.dart';
 import 'package:music_player/widgets/songstorage.dart';

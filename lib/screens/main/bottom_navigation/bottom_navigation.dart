@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_player/db/liked_songs_db.dart';
+import 'package:music_player/screens/like_songs/controller/liked_songs_db_controller.dart';
 import 'package:music_player/functions/color/app_colors.dart';
 import 'package:music_player/widgets/songstorage.dart';
 import 'package:music_player/screens/home/home_screen.dart';

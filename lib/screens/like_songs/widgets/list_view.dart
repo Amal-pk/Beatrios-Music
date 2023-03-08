@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_player/db/liked_songs_db.dart';
 import 'package:music_player/functions/buttons/liked_button.dart';
+import 'package:music_player/screens/like_songs/controller/liked_songs_db_controller.dart';
 import 'package:music_player/screens/playing_music/play_music.dart';
 import 'package:music_player/widgets/songstorage.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -11,7 +11,7 @@ class ListViewLikedSongWidget extends StatelessWidget {
   final List<SongModel> likeData;
   @override
   Widget build(BuildContext context) {
-    LikedSongDB _db = Get.put(LikedSongDB());
+    final LikedSongDB db = Get.put(LikedSongDB());
 
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -24,7 +24,6 @@ class ListViewLikedSongWidget extends StatelessWidget {
             child: ListTile(
               onTap: () {
                 List<SongModel> newList = [...likeData];
-                // setState(() {});
                 Songstorage.player.stop();
                 Songstorage.player.setAudioSource(
                     Songstorage.createSongList(newList),
